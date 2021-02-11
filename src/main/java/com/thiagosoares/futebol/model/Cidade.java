@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,22 +18,24 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Cidade implements Serializable{
+@Table(name = "cidades")
+public class Cidade implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String name;
+	private String nome;
 
 	@ManyToOne
-	@JoinColumn(name = "estado_id")
+	@JoinColumn(name = "id_estado")
 	private Estado estado;
 
-	public Cidade(Long id, String name) {
+	public Cidade(Long id, String nome, Estado estado) {
 		this.id = id;
-		this.name = name;
+		this.nome = nome;
+		this.estado = estado;
 	}
 
 	@Override

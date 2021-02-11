@@ -8,36 +8,40 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "estados")
-public class Estado implements Serializable {
+@NoArgsConstructor
+@Table(name = "jogadores")
+public class Jogador implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String nome;
+	private String name;
 
-	@JsonIgnore
-	@OneToMany(mappedBy = "estado")
-	private List<Cidade> cidades = new ArrayList<>();
+	@ManyToMany(mappedBy = "jogadores")
+	private List<Clube> clubes = new ArrayList<>();
 
-	public Estado(Long id, String nome) {
+	private String email;
+
+	private String cpf;
+
+	public Jogador(Long id, String name, String email, String cpf) {
 		this.id = id;
-		this.nome = nome;
+		this.name = name;
+		this.email = email;
+		this.cpf = cpf;
 	}
 
 	@Override
@@ -56,7 +60,7 @@ public class Estado implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Estado other = (Estado) obj;
+		Jogador other = (Jogador) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

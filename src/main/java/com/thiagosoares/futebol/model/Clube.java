@@ -8,21 +8,21 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "estados")
-public class Estado implements Serializable {
+@NoArgsConstructor
+@Table(name = "clubes")
+public class Clube implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -31,11 +31,13 @@ public class Estado implements Serializable {
 
 	private String nome;
 
-	@JsonIgnore
-	@OneToMany(mappedBy = "estado")
-	private List<Cidade> cidades = new ArrayList<>();
+	@ManyToMany
+	@JoinTable(name = "CLUBE_JOGADORES",
+		joinColumns = @JoinColumn(name = "id_jogador"),
+		inverseJoinColumns = @JoinColumn(name = "id_clube"))
+	private List<Jogador> jogadores = new ArrayList<>();
 
-	public Estado(Long id, String nome) {
+	public Clube(Long id, String nome) {
 		this.id = id;
 		this.nome = nome;
 	}
@@ -56,7 +58,7 @@ public class Estado implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Estado other = (Estado) obj;
+		Clube other = (Clube) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

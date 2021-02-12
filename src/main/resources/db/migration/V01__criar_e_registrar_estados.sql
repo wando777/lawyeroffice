@@ -1,8 +1,6 @@
 CREATE TABLE estados(
 	id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
 	nome VARCHAR(50) NOT NULL
-	--id_cidade BIGINT(20) NOT NULL
-	--FOREIGN KEY (id_cidade) REFERENCES cidades(id)
 ); --ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO estados (nome) values ('Acre');

@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -28,18 +30,19 @@ public class Jogador implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String name;
-
-	@ManyToMany(mappedBy = "jogadores")
-	private List<Clube> clubes = new ArrayList<>();
+	private String nome;
 
 	private String email;
 
 	private String cpf;
 
+	@JsonIgnore
+	@ManyToMany(mappedBy = "jogadores")
+	private List<Clube> clubes = new ArrayList<>();
+
 	public Jogador(Long id, String name, String email, String cpf) {
 		this.id = id;
-		this.name = name;
+		this.nome = name;
 		this.email = email;
 		this.cpf = cpf;
 	}

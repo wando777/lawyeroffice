@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.thiagosoares.futebol.model.Clube;
+import com.thiagosoares.futebol.model.Jogador;
 import com.thiagosoares.futebol.repositories.ClubeRepository;
 
 @RestController
@@ -22,9 +23,15 @@ public class ClubeResource {
 
 	@GetMapping
 	public List<Clube> listar() {
-		return clubeRepository.findAll();
+		List<Clube> clubes = clubeRepository.findAll();
+		for(Clube clube : clubes) {
+			for(Jogador jg : clube.getJogadores()) {
+				System.out.println(jg.getNome().toString());
+			}
+		}
+		return clubes;
 	}
-	
+
 	@GetMapping("/{id}")
 	public ResponseEntity<?> buscarPeloId(@PathVariable Long id) {
 		Optional<Clube> cliente = clubeRepository.findById(id);

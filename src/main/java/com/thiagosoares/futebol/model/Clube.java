@@ -32,9 +32,9 @@ public class Clube implements Serializable {
 	private String nome;
 
 	@ManyToMany
-	@JoinTable(name = "CLUBE_JOGADORES",
-		joinColumns = @JoinColumn(name = "id_jogador"),
-		inverseJoinColumns = @JoinColumn(name = "id_clube"))
+	@JoinTable(name = "clube_jogadores",
+		joinColumns = @JoinColumn(name = "id_clube"),
+		inverseJoinColumns = @JoinColumn(name = "id_jogador"))
 	private List<Jogador> jogadores = new ArrayList<>();
 
 	public Clube(Long id, String nome) {

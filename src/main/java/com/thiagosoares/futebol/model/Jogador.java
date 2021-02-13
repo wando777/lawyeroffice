@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,7 +36,7 @@ public class Jogador implements Serializable {
 
 	private String cpf;
 
-	@JsonIgnore
+	@JsonBackReference
 	@ManyToMany(mappedBy = "jogadores")
 	private List<Clube> clubes = new ArrayList<>();
 

@@ -10,31 +10,26 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.thiagosoares.futebol.model.Clube;
-import com.thiagosoares.futebol.repositories.ClubeRepository;
-import com.thiagosoares.futebol.services.ClubeService;
-import com.thiagosoares.futebol.services.exceptions.ObjectNotFoundException;
+import com.thiagosoares.futebol.model.Jogador;
+import com.thiagosoares.futebol.repositories.JogadorRepository;
 
 @RestController
-@RequestMapping("/clubes")
-public class ClubeResource {
+@RequestMapping("/jogadores")
+public class JogadorResource {
 
 	@Autowired
-	private ClubeService clubeService;
-	
-	@Autowired
-	private ClubeRepository clubeRepository;
+	private JogadorRepository jogadorRepository;
 
 	@GetMapping
-	public List<Clube> listar() {
-		List<Clube> clubes = clubeRepository.findAll();
-		return clubes;
+	public List<Jogador> listar() {
+		List<Jogador> jogadores = jogadorRepository.findAll();
+		return jogadores;
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<?> buscarPeloId(@PathVariable Long id) {
-		Clube clube = clubeService.findClube(id);
-		return ResponseEntity.ok().body(clube);
+		Optional<Jogador> jogador = jogadorRepository.findById(id);
+		return !jogador.isEmpty() ? ResponseEntity.ok(jogador) : ResponseEntity.notFound().build();
 	}
 
 }

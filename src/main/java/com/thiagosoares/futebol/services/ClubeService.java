@@ -2,26 +2,35 @@ package com.thiagosoares.futebol.services;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.thiagosoares.futebol.model.Clube;
 import com.thiagosoares.futebol.repositories.ClubeRepository;
 
-import javassist.NotFoundException;
+import com.thiagosoares.futebol.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class ClubeService {
 
+	@Autowired
 	private ClubeRepository clubeRepository;
 
-	public Clube findClube(Long id) throws NotFoundException {
-		Optional<Clube> obj = clubeRepository.findById(id);
-
-		if (obj.isEmpty()) {
-			throw new NotFoundException("Não encontrado");
+	public Clube findClube(Long id) {
+		Optional<Clube> clube = clubeRepository.findById(id);
+		if (clube.isEmpty()) {
+			throw new ObjectNotFoundException(
+					"Clube não encontrado com id: " + id + ", tipo: " + Clube.class.getName());
 		}
-		Clube clubeSalvo = obj.get();
-		return clubeSalvo;
+		return clube.get();
 	}
+
+//	public Optional<Clube> findClube(Long id) {
+//		Optional<Clube> obj = clubeRepository.findById(id);
+//		if (obj.isEmpty()) {
+//			throw new ObjectNotFoundException("Objeto não encontrado, ID: " + id);
+//		}
+//		return obj;
+//	}
 
 }

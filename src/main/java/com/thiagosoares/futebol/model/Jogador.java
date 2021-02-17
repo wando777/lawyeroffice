@@ -2,16 +2,22 @@ package com.thiagosoares.futebol.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,6 +41,14 @@ public class Jogador implements Serializable {
 	private String email;
 
 	private String cpf;
+	
+	@JsonManagedReference
+	@OneToMany(mappedBy = "jogador")
+	private List<Endereco> enderecos = new ArrayList<>();
+	
+//	@ElementCollection
+//	@CollectionTable(name = "telefones")
+//	private Set<String> telefones = new HashSet<>();
 
 	@JsonBackReference
 	@ManyToMany(mappedBy = "jogadores")

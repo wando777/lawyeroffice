@@ -10,7 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,25 +20,39 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "cidades")
-public class Cidade implements Serializable {
+@Table(name = "enderecos")
+public class Endereco implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-
-	private String nome;
-
-	@JsonManagedReference
+	private Integer id;
+	
+	private String logradouro;
+	private String numero;
+	private String complemento;
+	private String bairro;
+	private String cep;
+	
 	@ManyToOne
-	@JoinColumn(name = "id_estado")
-	private Estado estado;
+	@JoinColumn(name="id_cidade")
+	private Cidade cidade;
 
-	public Cidade(Long id, String nome, Estado estado) {
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name="id_jogador")
+	private Jogador jogador;
+
+	public Endereco(Integer id, String logradouro, String numero, String complemento, String bairro, String cep,
+			Jogador jogador, Cidade cidade) {
 		this.id = id;
-		this.nome = nome;
-		this.estado = estado;
+		this.logradouro = logradouro;
+		this.numero = numero;
+		this.complemento = complemento;
+		this.bairro = bairro;
+		this.cep = cep;
+		this.jogador = jogador;
+		this.cidade = cidade;
 	}
 
 	@Override
@@ -57,7 +71,7 @@ public class Cidade implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Cidade other = (Cidade) obj;
+		Endereco other = (Endereco) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

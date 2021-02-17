@@ -5,5 +5,5 @@ CREATE TABLE jogadores(
 	cpf VARCHAR(50) NOT NULL
 ); --ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
-
+INSERT INTO jogadores (nome, email, cpf) values ('Jose','teste@gmail.com','12345678910');
+INSERT INTO jogadores (nome, email, cpf) values ('Pedro','teste@gmail.com','12345678910');

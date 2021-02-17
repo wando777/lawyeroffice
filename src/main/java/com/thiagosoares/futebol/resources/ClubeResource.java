@@ -1,7 +1,6 @@
 package com.thiagosoares.futebol.resources;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.thiagosoares.futebol.model.Clube;
 import com.thiagosoares.futebol.repositories.ClubeRepository;
 import com.thiagosoares.futebol.services.ClubeService;
-import com.thiagosoares.futebol.services.exceptions.ObjectNotFoundException;
 
 @RestController
 @RequestMapping("/clubes")

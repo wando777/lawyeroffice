@@ -10,8 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,7 +28,6 @@ public class Cidade implements Serializable {
 
 	private String nome;
 
-	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name = "id_estado")
 	private Estado estado;

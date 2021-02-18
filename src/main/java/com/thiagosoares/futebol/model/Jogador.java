@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -14,10 +15,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -41,24 +42,27 @@ public class Jogador implements Serializable {
 	private String email;
 
 	private String cpf;
-	
-	@JsonManagedReference
+
 	@OneToMany(mappedBy = "jogador")
 	private List<Endereco> enderecos = new ArrayList<>();
-	
-//	@ElementCollection
-//	@CollectionTable(name = "telefones")
-//	private Set<String> telefones = new HashSet<>();
 
-	@JsonBackReference
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "jogador")
+	private Contrato contrato;
+
+	@ElementCollection
+	@CollectionTable(name = "telefones")
+	private Set<String> telefones = new HashSet<>();
+
+	@JsonIgnore
 	@ManyToMany(mappedBy = "jogadores")
 	private List<Clube> clubes = new ArrayList<>();
 
-	public Jogador(Long id, String name, String email, String cpf) {
+	public Jogador(Long id, String nome, String email, String cpf, Contrato contrato) {
 		this.id = id;
-		this.nome = name;
+		this.nome = nome;
 		this.email = email;
 		this.cpf = cpf;
+		this.contrato = contrato;
 	}
 
 	@Override

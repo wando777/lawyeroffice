@@ -1,58 +1,54 @@
 package com.thiagosoares.futebol.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
+@NoArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
-@Table(name = "enderecos")
-public class Endereco implements Serializable {
+@Table(name = "contratos")
+public class Contrato implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-	
-	private String logradouro;
-	private String numero;
-	private String complemento;
-	private String bairro;
-	private String cep;
-	
-	@ManyToOne
-	@JoinColumn(name="id_cidade")
-	private Cidade cidade;
+	private Long id;
 
-	@JsonIgnore
-	@ManyToOne
+	private Double salario;
+
+	@JsonFormat(pattern="dd/MM/yyy")
+	private Date inicioContrato;
+
+	@JsonFormat(pattern="dd/MM/yyy")
+	private Date fimContrato;
+
+	@OneToOne
 	@JoinColumn(name="id_jogador")
+	@MapsId
 	private Jogador jogador;
 
-	public Endereco(Integer id, String logradouro, String numero, String complemento, String bairro, String cep,
-			Jogador jogador, Cidade cidade) {
+	public Contrato(Long id, Double salario, Date inicioContrato, Date fimContrato, Jogador jogador) {
 		this.id = id;
-		this.logradouro = logradouro;
-		this.numero = numero;
-		this.complemento = complemento;
-		this.bairro = bairro;
-		this.cep = cep;
+		this.salario = salario;
+		this.inicioContrato = inicioContrato;
+		this.fimContrato = fimContrato;
 		this.jogador = jogador;
-		this.cidade = cidade;
 	}
 
 	@Override
@@ -71,7 +67,7 @@ public class Endereco implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Endereco other = (Endereco) obj;
+		Contrato other = (Contrato) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

@@ -13,6 +13,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,12 +33,13 @@ public class Contrato implements Serializable {
 
 	private Double salario;
 
-	@JsonFormat(pattern="dd/MM/yyy")
-	private Date inicioContrato;
+	@JsonFormat(pattern="dd/MM/yyyy")
+	private Date inicio;
 
 	@JsonFormat(pattern="dd/MM/yyy")
-	private Date fimContrato;
+	private Date fim;
 
+	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name="id_jogador")
 	@MapsId
@@ -46,8 +48,8 @@ public class Contrato implements Serializable {
 	public Contrato(Long id, Double salario, Date inicioContrato, Date fimContrato, Jogador jogador) {
 		this.id = id;
 		this.salario = salario;
-		this.inicioContrato = inicioContrato;
-		this.fimContrato = fimContrato;
+		this.inicio = inicioContrato;
+		//this.fimContrato = fimContrato;
 		this.jogador = jogador;
 	}
 

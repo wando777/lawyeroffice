@@ -13,8 +13,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -33,7 +31,6 @@ public class Clube implements Serializable {
 
 	private String nome;
 
-	@JsonManagedReference
 	@ManyToMany
 	@JoinTable(name = "clube_jogadores",
 		joinColumns = @JoinColumn(name = "id_clube"),

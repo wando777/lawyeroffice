@@ -8,11 +8,14 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -46,12 +49,13 @@ public class Jogador implements Serializable {
 	@OneToMany(mappedBy = "jogador")
 	private List<Endereco> enderecos = new ArrayList<>();
 
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name = "telefones", joinColumns = @JoinColumn(name = "id"))
+	@Column(name = "telefone")
+	private Set<String> telefones = new HashSet<>();
+
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "jogador")
 	private Contrato contrato;
-
-	@ElementCollection
-	@CollectionTable(name = "telefones")
-	private Set<String> telefones = new HashSet<>();
 
 	@JsonIgnore
 	@ManyToMany(mappedBy = "jogadores")

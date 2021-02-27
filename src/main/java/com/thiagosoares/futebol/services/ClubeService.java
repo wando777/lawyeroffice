@@ -24,6 +24,11 @@ public class ClubeService {
 		}
 		return clube.get();
 	}
+	
+	public Clube inserir(Clube obj) {
+		obj.setId(null);
+		return clubeRepository.save(obj);
+	}
 
 //	public Optional<Clube> findClube(Long id) {
 //		Optional<Clube> obj = clubeRepository.findById(id);
